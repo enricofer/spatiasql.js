@@ -32,8 +32,8 @@ header {
 
 #control {
 	background: hsl(185, 2%, 10%);
-	min-width: 50%;
-	max-width: 50%;
+	min-width: 40%;
+	max-width: 40%;
 	height: 100%;
 	display: flex;
 	flex-flow: column nowrap;
@@ -110,8 +110,8 @@ header {
 #tbl {
 	overflow: auto;
 	min-height: 100px;
-	max-height: 50%;
-	margin: 5px;
+	max-height: 100%;
+	margin-right: 15px;
 }
 
 table {
