@@ -145,6 +145,7 @@ window.onload = function () {
 		if (evt.data.id === 0) {
 			if (query != "") {
 		  	var sql = editor.getValue();
+				timer.start();
 		  } else {
 				var sql = 'SELECT sqlite_version(), spatialite_version(), proj4_version(), geos_version()'
 			}

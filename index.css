@@ -37,7 +37,14 @@ header {
 	height: 100%;
 	display: flex;
 	flex-flow: column nowrap;
-	padding: 10px;
+	padding: 0px;
+}
+
+#tabs {
+	min-width: 60%;
+	max-width: 60%;
+	min-height: 100%;
+	max-height: 100%;
 }
 
 #sql {
@@ -55,7 +62,7 @@ header {
 #editor {
 	flex-grow: 1;
 	height: 100%;
-	margin: 5px;
+	margin: 10px;
 }
 
 #panel {
@@ -66,7 +73,7 @@ header {
 	justify-content: space-between;
 	overflow: hidden;
 	min-height: 60px;
-	margin: 5px;
+	margin: 10px;
 }
 
 #panel > button, input[type="file"] {
@@ -109,8 +116,7 @@ header {
 
 #tbl {
 	overflow: auto;
-	min-height: 100px;
-	max-height: 100%;
+	max-height: 90%;
 	margin-right: 15px;
 }
 
