@@ -128,6 +128,7 @@ window.onload = function () {
 		timer.stop();
 	};
 	worker.onmessage = function (evt) {
+		timer.stop()
 		if (evt.data.initialized) {
 			var xhr = new XMLHttpRequest();
 			xhr.open('GET', 'data/veneto.sqlite', true);
