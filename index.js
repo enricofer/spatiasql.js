@@ -62,6 +62,7 @@ window.onload = function () {
 
 	}
 	var timer = {
+		running: false,
 		span: document.getElementById('time'),
 		interval: null,
 		start: function () {
@@ -69,10 +70,14 @@ window.onload = function () {
 			timer.interval = setInterval(function() { timer.run() }, 10);
 		},
 		stop: function () {
-			clearInterval(timer.interval);
+			if (timer.running){
+				clearInterval(timer.interval);
+				timer.running = false
+			}
 		},
 		run: function () {
 			timer.span.innerHTML = ((Date.now() - timer.time) / 1000).toFixed(2) + ' sec';
+			timer.running = true
 		},
 		time: Date.now()
 	};
