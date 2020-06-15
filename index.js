@@ -81,7 +81,6 @@ window.onload = function () {
 		},
 		time: Date.now()
 	};
-	timer.start();
 	mapboxgl.accessToken = 'pk.eyJ1IjoicXVhc2lnaXQiLCJhIjoiY2pib3h1aWF4NXJrMTJxbnVhbG9qeTdqeSJ9.5pJbvgw8_UJ8bZAQ_V9dOg';
 	var map = new mapboxgl.Map({
 		container: 'map',
@@ -133,7 +132,6 @@ window.onload = function () {
 		timer.stop();
 	};
 	worker.onmessage = function (evt) {
-		timer.stop()
 		console.log(evt)
 		if (evt.data.initialized) {
 			var xhr = new XMLHttpRequest();
@@ -148,11 +146,11 @@ window.onload = function () {
 				});
 			};
 			xhr.send();
+			timer.start();
 		}
 		if (evt.data.id === 0) {
 			if (query != "") {
 		  	var sql = editor.getValue();
-				timer.start();
 		  } else {
 				var sql = 'SELECT sqlite_version(), spatialite_version(), proj4_version(), geos_version()'
 			}
@@ -166,6 +164,9 @@ window.onload = function () {
 			if (Array.isArray(evt.data.results)) {
 				renderdata(evt.data.results[0]);
 			}
+		}
+		if (evt.data.results) {
+			timer.stop();
 		}
 	};
 
