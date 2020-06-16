@@ -22,6 +22,8 @@ function gup(name)
     return results[1];
 }
 
+
+
 window.onload = function () {
 	var id = 0;
 	var collection = { type: 'FeatureCollection', features: [] };
@@ -129,11 +131,38 @@ window.onload = function () {
 	var worker = new Worker(
 		runWasm ? 'dist/wasm/spatiasql.worker.js' : 'dist/spatiasql.worker.js'
 	);
+
+	function getPropTable(props) {
+		var info = '<div class="propTab"><small><table>';
+
+		for (var key in props) {
+			if (props.hasOwnProperty(key)&&(key !='geometry')) {
+				info += "<tr>"
+				info += "<td><strong>" + key + "</strong></td>"
+				info += '<td style="padding-left:8px;">' + props[key] + '</td>';
+				info += "</tr>"
+			}
+		}
+
+		info += "</table></small></div>";
+		return info
+	}
+	
+		
+	map.on('click', 'poly', function(e) {
+		console.log(e)
+		new mapboxgl.Popup()
+		.setLngLat(e.lngLat)
+		.setHTML(getPropTable(e.features[0].properties))
+		.addTo(map);
+		});
+
 	worker.onerror = function (evt) {
 		document.getElementById('error').innerHTML = evt.message;
 		timer.stop();
 	};
 	worker.onmessage = function (evt) {
+		console.log(evt)
 		if (evt.data.initialized) {
 			var xhr = new XMLHttpRequest();
 			xhr.open('GET', 'data/veneto.sqlite', true);
@@ -153,13 +182,16 @@ window.onload = function () {
 			if (query != "") {
 		  	var sql = editor.getValue();
 		  } else {
-				var sql = 'SELECT sqlite_version(), spatialite_version(), proj4_version(), geos_version()'
+				//var sql = 'SELECT sqlite_version(), spatialite_version(), proj4_version(), geos_version()'
+				var sql = editor.getValue();
 			}
 			worker.postMessage({
 				id: id++,
 				action: 'exec',
 				sql: sql
 			});
+
+			document.getElementById("t_tab").click();
 		} else {
 			if (Array.isArray(evt.data.results)) {
 				timer.stop();
@@ -183,6 +215,7 @@ window.onload = function () {
 
 	function draw (res) {
 		var features = [], cols = res.columns, rows = res.values;
+		var hasGeojson;
 		for (var c = 0, cs = cols.length; c < cs; c++) {
 			if (cols[c].toLowerCase().indexOf('geojson') >= 0) {
 				for (var r = 0, rs = rows.length; r < rs; r++) {
@@ -210,10 +243,13 @@ window.onload = function () {
 				}
 			}
 		}
+		collection.features = features;
+		map.getSource('source').setData(collection);
 		if (features.length > 0) {
-			collection.features = features;
-			map.getSource('source').setData(collection);
+			document.getElementById("m_tab").click();
 			map.fitBounds(turf.bbox(collection), { padding: 20 });
+		} else {
+			document.getElementById("t_tab").click();
 		}
 	}
 
@@ -237,6 +273,13 @@ window.onload = function () {
 		}
 	});
 
-
+	document.getElementById('listtables').addEventListener('click', function (evt)  {
+		worker.postMessage({
+			id: id++,
+			action: 'exec',
+			sql: "SELECT name,replace(substr(sql,instr(sql, '(')+1, instr(sql, ')')-1), ',', '<br/>') as fields FROM sqlite_master WHERE type = 'table' AND name NOT LIKE 'sql%' and name NOT LIKE 'idx_%' and name NOT LIKE 'geometry_%' and name NOT LIKE 'spatial_%' and name NOT LIKE 'views_%' and name NOT LIKE 'virts_%' and name NOT LIKE 'Elementary%' ORDER BY 1;"
+		});
+		document.getElementById("t_tab").click();
+	})
 
 }

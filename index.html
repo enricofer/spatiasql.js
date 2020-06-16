@@ -3,7 +3,7 @@
 	<head>
 		<title></title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-		<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.43.0/mapbox-gl.css' rel='stylesheet' />
+		<link href='https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.css' rel='stylesheet' />
 		<link href='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.26.0/codemirror.min.css' rel='stylesheet' />
 		<link href='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.33.0/theme/monokai.min.css' rel='stylesheet' />
 		<link rel="stylesheet" href="https://jqueryui.com/jquery-wp-content/themes/jqueryui.com/style.css">
@@ -11,7 +11,7 @@
 		<!-- <link href='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.33.0/addon/scroll/simplescrollbars.min.css' rel='stylesheet' /> -->
 		<link rel='stylesheet' type='text/css' href='./index.css'>
 		<script src="https://npmcdn.com/@turf/turf/turf.min.js"></script>
-		<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.43.0/mapbox-gl.js'></script>
+		<script src='https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.js'></script>
 		<script src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.26.0/codemirror.min.js'></script>
 		<script src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.33.0/keymap/sublime.min.js'></script>
 		<script src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.33.0/mode/sql/sql.min.js'></script>
@@ -55,6 +55,19 @@
 			border: unset !important;
 }
 
+.propTab td{
+	border: unset;
+	padding: 0;
+}
+
+.propTab small{
+	color: #5e5353  !important;
+}
+
+.propTab strong{
+	color: black  !important;
+}
+
 		</style>
 	</head>
 	<body>
@@ -70,6 +83,7 @@
 			<div id='main'>
 				<div id='control'>
 					<div id='panel'>
+						<button id='listtables'>list tables</button>
 						<button id='run'>run query</button>
 						<input id='file' type='file'/>
 						<span id='error'></span>
@@ -80,7 +94,7 @@
 						<textarea id='code' name='code'>
 /*
 You can draw a geometry on the map by including 'geojson' in a column name.
-SELECT * FROM sqlite_master WHERE type='table'
+click on "run query" to see sample result
 */
 
 SELECT AsGeoJSON(geom) AS geojson
