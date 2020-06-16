@@ -66,18 +66,20 @@ window.onload = function () {
 		span: document.getElementById('time'),
 		interval: null,
 		start: function () {
+			console.log("start")
 			timer.time = Date.now();
 			timer.interval = setInterval(function() { timer.run() }, 10);
+			timer.running = true;
 		},
 		stop: function () {
+			console.log("stop")
 			if (timer.running){
 				clearInterval(timer.interval);
-				timer.running = false
+				timer.running = false;
 			}
 		},
 		run: function () {
 			timer.span.innerHTML = ((Date.now() - timer.time) / 1000).toFixed(2) + ' sec';
-			timer.running = true
 		},
 		time: Date.now()
 	};
@@ -132,7 +134,6 @@ window.onload = function () {
 		timer.stop();
 	};
 	worker.onmessage = function (evt) {
-		console.log(evt)
 		if (evt.data.initialized) {
 			var xhr = new XMLHttpRequest();
 			xhr.open('GET', 'data/veneto.sqlite', true);
@@ -160,13 +161,10 @@ window.onload = function () {
 				sql: sql
 			});
 		} else {
-			timer.stop();
 			if (Array.isArray(evt.data.results)) {
+				timer.stop();
 				renderdata(evt.data.results[0]);
 			}
-		}
-		if (evt.data.results) {
-			timer.stop();
 		}
 	};
 
