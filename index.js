@@ -1,6 +1,7 @@
 
 var query = gup('query');
 var tab = gup('tab');
+var title = gup('title');
 
 if (tab != "") {
 	document.getElementById(tab+"_tab").click();
@@ -8,6 +9,11 @@ if (tab != "") {
 
 if (query != "") {
 	document.getElementById('code').value = unescape(query);
+}
+
+if (title != "") {
+	document.getElementById('title').innerHTML = unescape(title);
+    document.getElementById('file').style.display = "none";
 }
 
 function gup(name)
@@ -42,11 +48,13 @@ window.onload = function () {
 		var tbl = document.getElementById('tbl');
 		if (data) {
 			var html = '<table><tr>';
+            var numrows = 0
 			html += data.columns.reduce(function (html, d) {
 				html += '<th>' + d + '</th>';
 				return html;
 			}, '') + '</tr>';
 			html += data.values.reduce(function (html, row) {
+				numrows += 1
 				html += '<tr>';
 				row.forEach(function (col) {
 					html += '<td>' + (typeof col === 'string' || typeof col === 'number' ? col : typeof col) + '</td>';
@@ -57,6 +65,7 @@ window.onload = function () {
 			html += '</table>';
 
 			tbl.innerHTML = html;
+			document.getElementById('numrows').innerHTML = numrows.toString()+" rows"
 			draw(data);
 		} else {
 			tbl.innerHTML = '';

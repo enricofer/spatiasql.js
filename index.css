@@ -82,7 +82,7 @@ header {
 	font-family: monospace;
 }
 
-#time, #error {
+#time, #error, #numrows {
 	min-height: 30px;
 	max-width: 120px;
 	background: hsl(185, 2%, 10%);;
@@ -90,11 +90,11 @@ header {
 	color: lightgrey;
 	text-align: center;
     vertical-align: middle;
-    margin-right: 10px;
+    margin-right: 0px;
 	border: solid;
 	border-width: 2px;
 	border-color: #333;
-	font-size: 18px;
+	font-size: 16px;
 	font-family: monospace;
 	border-radius: 2px;
 	white-space:nowrap;
@@ -108,7 +108,7 @@ header {
 	text-align: center;
 }
 
-#time {
+#time, #numrows {
 	border: 0;
 	color: #e6db74;
 	margin-left: auto;
@@ -172,11 +172,13 @@ td, th {
 
 #title {
 	width: 100%;
-	text-align: center;
+	text-align: left;
 	display: block;
-	font-size: 24px;
+	font-family: sans-serif;
+	font-size: 30px;
 	margin: 16px;
-	color: lightgrey;
+	color: #c00;
+	font-weight: bold;
 }
 #title > a {
 	text-decoration: underline;
