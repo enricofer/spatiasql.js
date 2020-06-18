@@ -182,7 +182,6 @@ td, th {
 }
 #title > a {
 	text-decoration: underline;
-	color: lightgrey;
 }
 title > a:hover {
 	text-decoration: underline;
