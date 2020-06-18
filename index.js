@@ -65,7 +65,7 @@ window.onload = function () {
 			html += '</table>';
 
 			tbl.innerHTML = html;
-			document.getElementById('numrows').innerHTML = numrows.toString()+" rows"
+			document.getElementById('numrows').innerHTML = numrows.toString()+" righe"
 			draw(data);
 		} else {
 			tbl.innerHTML = '';
