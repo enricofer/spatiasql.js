@@ -83,7 +83,6 @@ header {
 }
 
 #time, #error, #numrows {
-	min-height: 30px;
 	max-width: 120px;
 	background: hsl(185, 2%, 10%);;
 	flex: 1;
