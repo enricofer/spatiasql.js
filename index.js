@@ -57,7 +57,13 @@ window.onload = function () {
 				numrows += 1
 				html += '<tr>';
 				row.forEach(function (col) {
-					html += '<td>' + (typeof col === 'string' || typeof col === 'number' ? col : typeof col) + '</td>';
+					var cell
+					if (typeof col === 'string' && col.includes(',"coordinates":[')) {
+						cell = col.substring(0, 70) + "... "
+					} else {
+						cell = col
+					}
+					html += '<td>' + (typeof cell === 'string' || typeof cell === 'number' ? cell : typeof cell) + '</td>';
 				});
 				html += '</tr>';
 				return html;
