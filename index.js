@@ -292,7 +292,7 @@ window.onload = function () {
 		worker.postMessage({
 			id: id++,
 			action: 'exec',
-			sql: "SELECT name,replace(substr(sql,instr(sql, '(')+1, instr(sql, ')')-1), ',', '<br/>') as fields FROM sqlite_master WHERE type = 'table' AND name NOT LIKE 'sql%' and name NOT LIKE 'idx_%' and name NOT LIKE 'geometry_%' and name NOT LIKE 'spatial_%' and name NOT LIKE 'views_%' and name NOT LIKE 'virts_%' and name NOT LIKE 'Elementary%' ORDER BY 1;"
+			sql: "SELECT name,type,replace(substr(sql,instr(sql, '(')+1, instr(sql, ')')-1), ',', '<br/>') as fields FROM sqlite_master WHERE type in ('table','view') AND name NOT LIKE 'sql%' and name NOT LIKE 'idx_%' and name NOT LIKE 'geometry_%' and name NOT LIKE 'spatial_%' and name NOT LIKE 'views_%' and name NOT LIKE 'virts_%' and name NOT LIKE 'Elementary%' and name NOT LIKE 'geom_%' and name NOT LIKE 'vector_%' ORDER BY 1;"
 		});
 		document.getElementById("t_tab").click();
 	})
